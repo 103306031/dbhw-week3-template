@@ -12,9 +12,13 @@ function SinglyLinkedList() {
 SinglyLinkedList.prototype.add = function(data) {
   var node = new Node(data);
   if(!this.head) {
-    //TODO
+    this.head = node;
+    this.numberOfValues++;
+    
   } else {
-    //TODO
+  	this.tail.next = node;
+    this.tail = node;
+    this.numberOfValues++;
   }
 
 };
@@ -22,20 +26,46 @@ SinglyLinkedList.prototype.add = function(data) {
 SinglyLinkedList.prototype.remove = function(data) {
   var previous = this.head;
   var current = this.head;
-  //TODO
+  for (var i = 0, i < this.numberOfValues, i++){
+  	if(current.data == data){
+    	var temp = current.previous;
+    	current = current.next;
+      current.previous = temp;
+			this.numberOfValues--;
+      i = this.numberOfValues+1; //to break the for loop
+    }else{
+    	current = current.next;
+    }
+    if(i == this.numberOfValues){
+    	console.log("node not found")
+    }
+  }
+  
 };
 
 SinglyLinkedList.prototype.insertAfter = function(data, toNodeData) {
   var current = this.head;
-  //TODO
+  var node = new Node(data);
+  for (var i = 0, i < toNodeData, i++){
+  	current = current.next;
+  }
+  node.next = current.next;
+  current.next = node;
 };
 
 SinglyLinkedList.prototype.length = function() {
-  //TODO
+  console.log(this.numberOfValues);
 };
 
 SinglyLinkedList.prototype.print = function() {
-  //TODO
+	var current = this.head;
+  for (var i = 0, i < this.numberOfValues, i++){
+  	if(current.next != null){
+  		console.log(current.data + " ");
+    }else{
+    	console.log(current.data);
+    }
+  }
 };
 
 
