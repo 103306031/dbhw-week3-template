@@ -13,59 +13,67 @@ SinglyLinkedList.prototype.add = function(data) {
   var node = new Node(data);
   if(!this.head) {
     this.head = node;
-    this.numberOfValues++;
-    
-  } else {
-  	this.tail.next = node;
     this.tail = node;
-    this.numberOfValues++;
+  } else {
+    this.tail.next = node;
+    this.tail = node;
   }
+  this.numberOfValues++;
 
 };
 
 SinglyLinkedList.prototype.remove = function(data) {
   var previous = this.head;
   var current = this.head;
-  for (var i = 0, i < this.numberOfValues, i++){
-  	if(current.data == data){
-    	var temp = current.previous;
-    	current = current.next;
-      current.previous = temp;
-			this.numberOfValues--;
-      i = this.numberOfValues+1; //to break the for loop
-    }else{
-    	current = current.next;
-    }
-    if(i == this.numberOfValues){
-    	console.log("node not found")
+  while(current){
+  	if(current.data === data){
+  		if(current.data === this.head){
+  			this.head = this.head.next;
+  		}
+  		if(current.data === this.tail){
+  			this.tail = previous;
+  		}
+  		previous.next = current.next;
+  		this.numberOfValues--;
+  	}else{
+  		previous = current;
+  	}
+  	current = current.next;   	
     }
   }
   
 };
 
 SinglyLinkedList.prototype.insertAfter = function(data, toNodeData) {
-  var current = this.head;
-  var node = new Node(data);
-  for (var i = 0, i < toNodeData, i++){
-  	current = current.next;
-  }
-  node.next = current.next;
-  current.next = node;
+	var current = this.head;
+	while(current){
+  	if(current.data === toNodeData){
+  		var node = new Node(data);
+  		if(current.data === this.tail){
+  			this.tail.next = node;
+  			this.tail = node;
+  		}else{
+  			node.next = current.next;
+  			current.next = node;
+  		}
+  		this.numberOfValues++;
+  	}
+  	current = current.next;   	
+    }
 };
 
 SinglyLinkedList.prototype.length = function() {
-  console.log(this.numberOfValues);
+  return this.numberOfValues;
 };
 
 SinglyLinkedList.prototype.print = function() {
+	var string = "";
 	var current = this.head;
-  for (var i = 0, i < this.numberOfValues, i++){
-  	if(current.next != null){
-  		console.log(current.data + " ");
-    }else{
-    	console.log(current.data);
-    }
-  }
+  while(current){
+  	string += current.data + " ";
+  	current = current.next;
+   }
+   return string.trim();
 };
 
 
